@@ -1,0 +1,13 @@
+﻿@model List<Post>
+
+<div id="postsContainer">
+    <h3>Posts</h3>
+    @foreach (var post in Model)
+    {
+        <div class="item">
+            <h4>@post.id</h4>
+            <p>@post.title</p>
+            <p>@post.body</p>
+        </div>
+    }
+</div>

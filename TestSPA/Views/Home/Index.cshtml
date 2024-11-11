@@ -1,4 +1,54 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    #dataContainer {
+        margin-top: 20px;
+    }
+
+    .item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+</style>
+
+<h2>Welcome to the Home Page</h2>
+
+<button id="loadPosts">Load Posts</button>
+<button id="loadUsers">Load Users</button>
+
+<div id="dataContainer"></div>
+
+@section Scripts {
+    <script>
+        document.getElementById('loadPosts').addEventListener('click', async function () {
+            const response = await fetch('/Home/GetPosts');
+            if (response.ok) {
+                const html = await response.text(); 
+                document.getElementById('dataContainer').innerHTML = html;
+            } else {
+                console.error("Failed to load posts.");
+            }
+        });
+
+        document.getElementById('loadUsers').addEventListener('click', async function () {
+            const response = await fetch('/Home/GetUsers');
+            if (response.ok) {
+                const html = await response.text();
+                document.getElementById('dataContainer').innerHTML = html;
+            } else {
+                console.error("Failed to load users.");
+            }
+        });
+    </script>
+}
+
+
+
+
 
 
 @* 

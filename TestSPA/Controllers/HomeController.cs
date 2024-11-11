@@ -30,11 +30,14 @@ namespace TestSPA.Controllers
 			var response = await _httpClient.GetStringAsync("https://jsonplaceholder.typicode.com/posts");
             // ViewModel Approch using Model & Razor Syntex
             var posts = JsonConvert.DeserializeObject<List<Post>>(response);
-            return View("Index", posts); // Passing posts data to the main Index view
-            
-			// Simple Approch to fetch data ---------
-			//return Content(response, "application/json");
-		}
+            //return View("Index", posts); // Passing posts data to the main Index view
+
+			// Return posts data to partial view
+            return PartialView("_PostsPartial", posts); 
+
+            // Simple Approch to fetch data ---------
+            //return Content(response, "application/json");
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> GetUsers()
@@ -42,9 +45,12 @@ namespace TestSPA.Controllers
 			var response = await _httpClient.GetStringAsync("https://jsonplaceholder.typicode.com/users");
             // ViewModel Approch using Model & Razor Syntex 
             var users = JsonConvert.DeserializeObject<List<User>>(response);
-            return View("Index", users); // Passing users data to the main Index view
-            
-			// Simple Approch to fetch data ---------
+            //return View("Index", users); // Passing users data to the main Index view
+
+			// Return users data to partial view
+            return PartialView("_UsersPartial", users); 
+
+            // Simple Approch to fetch data ---------
             //return Content(response, "application/json");
         }
         /**/
