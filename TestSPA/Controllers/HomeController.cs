@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net.Http;
 using TestSPA.Models;
@@ -21,21 +23,33 @@ namespace TestSPA.Controllers
 			return View();
 		}
 
+		/**/
 		[HttpGet]
 		public async Task<IActionResult> GetPosts()
 		{
 			var response = await _httpClient.GetStringAsync("https://jsonplaceholder.typicode.com/posts");
-			return Content(response, "application/json");
+            // ViewModel Approch using Model & Razor Syntex
+            var posts = JsonConvert.DeserializeObject<List<Post>>(response);
+            return View("Index", posts); // Passing posts data to the main Index view
+            
+			// Simple Approch to fetch data ---------
+			//return Content(response, "application/json");
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> GetUsers()
 		{
 			var response = await _httpClient.GetStringAsync("https://jsonplaceholder.typicode.com/users");
-			return Content(response, "application/json");
-		}
+            // ViewModel Approch using Model & Razor Syntex 
+            var users = JsonConvert.DeserializeObject<List<User>>(response);
+            return View("Index", users); // Passing users data to the main Index view
+            
+			// Simple Approch to fetch data ---------
+            //return Content(response, "application/json");
+        }
+        /**/
 
-		public IActionResult Privacy()
+        public IActionResult Privacy()
 		{
 			return View();
 		}

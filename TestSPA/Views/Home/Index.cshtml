@@ -1,4 +1,67 @@
-﻿@{
+﻿
+
+
+@* 
+---------------------- ViewModel Approch using Model & Razor Syntex ----------------------------
+
+<!-- Use dynamic for flexibility -->
+@model IEnumerable<dynamic> 
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Welcome to the Home Page</h1>
+
+<a asp-action="GetPosts" class="btn btn-primary">Load Posts</a>
+<a asp-action="GetUsers" class="btn btn-secondary">Load Users</a>
+
+@if (Model != null && Model.Any())
+{
+    if (Model.First() is Post)
+    {
+        <h3>Posts</h3>
+        @foreach (var post in Model.Cast<Post>())
+        {
+            <div class="item">
+                <h4>@post.id</h4>
+                <p>@post.title</p>
+                <p>@post.body</p>
+            </div>
+        }
+    }
+    else if (Model.First() is User)
+    {
+        <h3>Users</h3>
+        @foreach (var user in Model.Cast<User>())
+        {
+            <div class="item">
+                <h4>@user.id</h4>
+                <p>@user.name</p>
+                <p>@user.username</p>
+                <p>@user.email</p>
+                <p>@user.phone</p>
+                <p>@user.website</p>
+            </div>
+        }
+    }
+}
+else
+{
+    <p>Click on "Load Posts" or "Load Users" to display data.</p>
+}
+
+
+*@
+
+
+
+
+
+
+@* 
+---------------------- Simple Approch to fetch data -------------------------------------- 
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -61,3 +124,4 @@
     </script>
 }
 
+*@
