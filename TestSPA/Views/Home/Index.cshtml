@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    #dataContainer {
+        margin-top: 20px;
+    }
+
+    .item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+</style>
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Home Page</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<button id="loadPosts">Load Posts</button>
+<button id="loadUsers">Load Users</button>
+
+<div id="dataContainer"></div>
+
+@section Scripts {
+    <script>
+        document.getElementById('loadPosts').addEventListener('click', async function() {
+            const response = await fetch('/Home/GetPosts');
+            if (response.ok) {
+                const posts = await response.json();
+                displayData(posts);
+            }
+        });
+
+        document.getElementById('loadUsers').addEventListener('click', async function() {
+            const response = await fetch('/Home/GetUsers');
+            if (response.ok) {
+                const users = await response.json();
+                displayData(users);
+            }
+        });
+
+        function displayData(data) {
+            const container = document.getElementById('dataContainer');
+            container.innerHTML = '';
+
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+                    itemDiv.innerHTML = `<pre>${JSON.stringify(item, null, 2)}</pre>`;
+                    container.appendChild(itemDiv);
+                });
+            }
+        }
+    </script>
+}
+
